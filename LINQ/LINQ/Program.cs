@@ -2,6 +2,39 @@
 
 using LINQ;
 
+#region Introduccion
+
+string[] palabras;
+palabras = new string[] { "gato", "perro", "lagarto", "tortuga", "cocodrilo", "serpiente", "123456789" };
+Console.WriteLine("Mas de 5 letras");
+
+List<string> resultado = new List<string>();
+
+foreach (string str in palabras)
+{
+    if (str.Length > 5)
+    {
+        resultado.Add(str);
+    }
+}
+
+foreach (var r in resultado)
+    Console.WriteLine(r);
+
+#endregion
+
+#region Utilizando LinQ
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+IEnumerable<string> list = from r in palabras where r.Length > 8 select r;
+
+foreach (var listado in list)
+    Console.WriteLine(listado);
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+#endregion
+
 //LinQ
 
 #region ListaModelos
@@ -123,10 +156,10 @@ foreach (var iteracion in listaEdad)
 
 // JOIN
 IEnumerable<Habitante> listaCasaGothan = from objetoTemporalHabitante in listaHabitante
-                                               join objetoTemporalCasa in listaCasa
-                                               on objetoTemporalHabitante.IdHabitante equals objetoTemporalCasa.IdCasa
-                                               where objetoTemporalCasa.Ciudad == "Gothan City"
-                                               select objetoTemporalHabitante;
+                                         join objetoTemporalCasa in listaCasa
+                                         on objetoTemporalHabitante.IdHabitante equals objetoTemporalCasa.IdCasa
+                                         where objetoTemporalCasa.Ciudad == "Gothan City"
+                                         select objetoTemporalHabitante;
 
 Console.WriteLine("---------------------------------------------------------------------------------");
 foreach (Habitante habitante in listaCasaGothan)
