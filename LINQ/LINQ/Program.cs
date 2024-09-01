@@ -2,38 +2,38 @@
 
 using LINQ;
 
-#region Introduccion
+//#region Introduccion
 
-string[] palabras;
-palabras = new string[] { "gato", "perro", "lagarto", "tortuga", "cocodrilo", "serpiente", "123456789" };
-Console.WriteLine("Mas de 5 letras");
+//string[] palabras;
+//palabras = new string[] { "gato", "perro", "lagarto", "tortuga", "cocodrilo", "serpiente", "123456789" };
+//Console.WriteLine("Mas de 5 letras");
 
-List<string> resultado = new List<string>();
+//List<string> resultado = new List<string>();
 
-foreach (string str in palabras)
-{
-    if (str.Length > 5)
-    {
-        resultado.Add(str);
-    }
-}
+//foreach (string str in palabras)
+//{
+//    if (str.Length > 5)
+//    {
+//        resultado.Add(str);
+//    }
+//}
 
-foreach (var r in resultado)
-    Console.WriteLine(r);
+//foreach (var r in resultado)
+//    Console.WriteLine(r);
 
-#endregion
+//#endregion
 
-#region Utilizando LinQ
+//#region Utilizando LinQ
 
-Console.WriteLine("---------------------------------------------------------------------------------");
-IEnumerable<string> list = from r in palabras where r.Length > 8 select r;
+//Console.WriteLine("---------------------------------------------------------------------------------");
+//IEnumerable<string> list = from r in palabras where r.Length > 8 select r;
 
-foreach (var listado in list)
-    Console.WriteLine(listado);
+//foreach (var listado in list)
+//    Console.WriteLine(listado);
 
-Console.WriteLine("---------------------------------------------------------------------------------");
+//Console.WriteLine("---------------------------------------------------------------------------------");
 
-#endregion
+//#endregion
 
 //LinQ
 
@@ -227,5 +227,52 @@ if (habitante1 == null)
 }
 
 Console.WriteLine(habitante1.datosHabitante());
+
+#endregion
+
+#region ElementAt
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+var terceraCasa = listaCasa.ElementAt(2);
+Console.WriteLine($"La tercera casa es: {terceraCasa.datosCasa()}");
+
+var casaError =listaCasa.ElementAtOrDefault(3);
+if (casaError != null) { Console.WriteLine($"La tercera casa es: {casaError.datosCasa()}"); }
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+var segundoHabitante = (from objetoTem in listaHabitante select objetoTem).ElementAtOrDefault(2);
+Console.WriteLine($"Segundo habitante es: {segundoHabitante.datosHabitante()}");
+
+#endregion
+
+#region Single
+
+try
+{
+    Console.WriteLine("---------------------------------------------------------------------------------");
+    var habitantes = listaHabitante.Single(variableTem => variableTem.Edad > 40 && variableTem.Edad < 70);
+    // Creando esta consulta pero con LinQ
+    var habitante2 = (from obtem in listaHabitante where obtem.Edad > 70 select obtem).Single();
+
+    Console.WriteLine($"Habitante con menos de 20 años: {habitantes.datosHabitante()}");
+    if (habitante2 != null) Console.WriteLine($"Habitante con mas de 70 años: {habitante2.datosHabitante()}");
+}
+catch (Exception)
+{
+    Console.WriteLine($"Ocurrio un error");
+}
+
+#endregion
+
+#region typeOf
+
+var listaEmpleados = new List<Empleado>() {
+    new Medico(){ Nombre = "Jorge Casa" },
+    new Enfermero(){ Nombre = "Raul Blanco"}
+};
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+var medico = listaEmpleados.OfType<Medico>();
+Console.WriteLine(medico.Single().Nombre);
 
 #endregion
