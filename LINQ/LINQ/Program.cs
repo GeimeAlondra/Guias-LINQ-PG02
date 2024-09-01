@@ -17,25 +17,24 @@ List<Habitante> listaHabitante = new List<Habitante>();
 listaCasa.Add(new Casa
 {
     IdCasa = 1,
-    Direccion = "3 avn Chalatenango",
-    Ciudad = "Chalatenango",
-    numeroHabitaciones = 20
+    Direccion = "3 av Norte ArcanCity",
+    Ciudad = "Gothan City",
+    numeroHabitaciones = 20,
 });
 
 listaCasa.Add(new Casa
 {
     IdCasa = 2,
-    Direccion = "4 av",
-    Ciudad = "San Salvador",
-    numeroHabitaciones = 9
+    Direccion = "6 av Sur SmollVille",
+    Ciudad = "Metropolis",
+    numeroHabitaciones = 5,
 });
 
 listaCasa.Add(new Casa
 {
     IdCasa = 3,
-    Direccion = "6 avn",
-    Ciudad = "San Miguel",
-    numeroHabitaciones = 5
+    Direccion = "Forest Hills, Queens, NY 11375",
+    Ciudad = "New York"
 });
 
 #endregion
@@ -45,65 +44,65 @@ listaCasa.Add(new Casa
 listaHabitante.Add(new Habitante
 {
     IdHabitante = 1,
-    Nombre = "Elena",
+    Nombre = "Bruno Diaz",
+    Edad = 36,
+    IdCasa = 1
+});
+
+listaHabitante.Add(new Habitante
+{
+    IdHabitante = 2,
+    Nombre = "Clark Kent.",
+    Edad = 40,
+    IdCasa = 2
+});
+
+listaHabitante.Add(new Habitante
+{
+    IdHabitante = 3,
+    Nombre = "Peter Parker",
     Edad = 25,
+    IdCasa = 3
+});
+
+listaHabitante.Add(new Habitante
+{
+    IdHabitante = 3,
+    Nombre = "Tia Mey",
+    Edad = 85,
+    IdCasa = 3
+});
+
+listaHabitante.Add(new Habitante
+{
+    IdHabitante = 2,
+    Nombre = "Luise Lain",
+    Edad = 40,
+    IdCasa = 2
+});
+
+listaHabitante.Add(new Habitante
+{
+    IdHabitante = 1,
+    Nombre = "Selina Kyle",
+    Edad = 30,
     IdCasa = 1
 });
 
 listaHabitante.Add(new Habitante
 {
     IdHabitante = 1,
-    Nombre = "Carlos",
-    Edad = 20,
-    IdCasa = 2
+    Nombre = "Alfred",
+    Edad = 65,
+    IdCasa = 1
 });
 
 listaHabitante.Add(new Habitante
 {
     IdHabitante = 1,
-    Nombre = "Alfredo",
-    Edad = 30,
-    IdCasa = 3
-});
-
-listaHabitante.Add(new Habitante
-{
-    IdHabitante = 1,
-    Nombre = "Luis",
-    Edad = 50,
-    IdCasa = 2
-});
-
-listaHabitante.Add(new Habitante
-{
-    IdHabitante = 1,
-    Nombre = "Sonia",
-    Edad = 18,
-    IdCasa = 2
-});
-
-listaHabitante.Add(new Habitante
-{
-    IdHabitante = 1,
-    Nombre = "Elmer",
+    Nombre = "Nathan Drake",
     Edad = 36,
-    IdCasa = 2
-});
-
-listaHabitante.Add(new Habitante
-{
-    IdHabitante = 1,
-    Nombre = "Miguel",
-    Edad = 45,
-    IdCasa = 2
-});
-
-listaHabitante.Add(new Habitante
-{
-    IdHabitante = 1,
-    Nombre = "Olga",
-    Edad = 15,
-    IdCasa = 2
+    IdCasa = 1
 });
 
 #endregion
@@ -123,14 +122,14 @@ foreach (var iteracion in listaEdad)
 }
 
 // JOIN
-IEnumerable<Habitante> listaCasaChalatenango = from objetoTemporalHabitante in listaHabitante
+IEnumerable<Habitante> listaCasaGothan = from objetoTemporalHabitante in listaHabitante
                                                join objetoTemporalCasa in listaCasa
                                                on objetoTemporalHabitante.IdHabitante equals objetoTemporalCasa.IdCasa
-                                               where objetoTemporalCasa.Ciudad == "Chalatenango"
+                                               where objetoTemporalCasa.Ciudad == "Gothan City"
                                                select objetoTemporalHabitante;
 
 Console.WriteLine("---------------------------------------------------------------------------------");
-foreach (Habitante habitante in listaCasaChalatenango)
+foreach (Habitante habitante in listaCasaGothan)
 {
     Console.WriteLine(habitante.datosHabitante());
 }
@@ -173,5 +172,27 @@ if (CasaConFirsthOrDedault == null)
 }
 
 Console.WriteLine("existe !Si existe!");
+
+#endregion
+
+#region Last
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+Casa ultimaCasa = listaCasa.Last(vTemporal => vTemporal.IdCasa > 1);
+
+Console.WriteLine(ultimaCasa.datosCasa());
+
+var habitante1 = (from objHabitante in listaHabitante 
+                  where objHabitante.Edad > 60 select objHabitante)
+                  .LastOrDefault();
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+if (habitante1 == null)
+{
+    Console.WriteLine("Algo fallo");
+    return;
+}
+
+Console.WriteLine(habitante1.datosHabitante());
 
 #endregion
