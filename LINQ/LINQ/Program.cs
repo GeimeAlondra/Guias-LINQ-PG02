@@ -2,40 +2,40 @@
 
 using LINQ;
 
-//#region Introduccion
+#region Introduccion
 
-//string[] palabras;
-//palabras = new string[] { "gato", "perro", "lagarto", "tortuga", "cocodrilo", "serpiente", "123456789" };
-//Console.WriteLine("Mas de 5 letras");
+string[] palabras;
+palabras = new string[] { "gato", "perro", "lagarto", "tortuga", "cocodrilo", "serpiente", "123456789" };
+Console.WriteLine("Mas de 5 letras");
 
-//List<string> resultado = new List<string>();
+List<string> resultado = new List<string>();
 
-//foreach (string str in palabras)
-//{
-//    if (str.Length > 5)
-//    {
-//        resultado.Add(str);
-//    }
-//}
+foreach (string str in palabras)
+{
+    if (str.Length > 5)
+    {
+        resultado.Add(str);
+    }
+}
 
-//foreach (var r in resultado)
-//    Console.WriteLine(r);
+foreach (var r in resultado)
+    Console.WriteLine(r);
 
-//#endregion
+#endregion
 
-//#region Utilizando LinQ
+#region Utilizando LinQ
 
-//Console.WriteLine("---------------------------------------------------------------------------------");
-//IEnumerable<string> list = from r in palabras where r.Length > 8 select r;
+Console.WriteLine("---------------------------------------------------------------------------------");
+IEnumerable<string> list = from r in palabras where r.Length > 8 select r;
 
-//foreach (var listado in list)
-//    Console.WriteLine(listado);
+foreach (var listado in list)
+    Console.WriteLine(listado);
 
-//Console.WriteLine("---------------------------------------------------------------------------------");
+Console.WriteLine("---------------------------------------------------------------------------------");
 
-//#endregion
+#endregion
 
-//LinQ
+// LinQ
 
 #region ListaModelos
 
@@ -48,12 +48,12 @@ List<Habitante> listaHabitante = new List<Habitante>();
 
 // Clase anónima - No se puede escribir sobre ella, son de solo lectura.
 listaCasa.Add(new Casa
-{
-    IdCasa = 1,
-    Direccion = "3 av Norte ArcanCity",
-    Ciudad = "Gothan City",
-    numeroHabitaciones = 20,
-});
+              {
+                  IdCasa = 1,
+                  Direccion = "3 av Norte ArcanCity",
+                  Ciudad = "Gothan City",
+                  numeroHabitaciones = 20,
+              });
 
 listaCasa.Add(new Casa
 {
@@ -215,8 +215,9 @@ Casa ultimaCasa = listaCasa.Last(vTemporal => vTemporal.IdCasa > 1);
 
 Console.WriteLine(ultimaCasa.datosCasa());
 
-var habitante1 = (from objHabitante in listaHabitante 
-                  where objHabitante.Edad > 60 select objHabitante)
+var habitante1 = (from objHabitante in listaHabitante
+                  where objHabitante.Edad > 60
+                  select objHabitante)
                   .LastOrDefault();
 
 Console.WriteLine("---------------------------------------------------------------------------------");
@@ -236,7 +237,7 @@ Console.WriteLine("-------------------------------------------------------------
 var terceraCasa = listaCasa.ElementAt(2);
 Console.WriteLine($"La tercera casa es: {terceraCasa.datosCasa()}");
 
-var casaError =listaCasa.ElementAtOrDefault(3);
+var casaError = listaCasa.ElementAtOrDefault(3);
 if (casaError != null) { Console.WriteLine($"La tercera casa es: {casaError.datosCasa()}"); }
 
 Console.WriteLine("---------------------------------------------------------------------------------");
@@ -274,5 +275,81 @@ var listaEmpleados = new List<Empleado>() {
 Console.WriteLine("---------------------------------------------------------------------------------");
 var medico = listaEmpleados.OfType<Medico>();
 Console.WriteLine(medico.Single().Nombre);
+
+#endregion
+
+#region OrderBy
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+var edadAsc = listaHabitante.OrderBy(x => x.Edad);
+
+var edadAscendente = from vt in listaHabitante orderby vt.Edad select vt;
+
+foreach (var edad in edadAscendente)
+{
+    Console.WriteLine(edad.datosHabitante());
+}
+
+#endregion
+
+#region OrderByDescending
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+var listaEdadDescendente = listaHabitante.OrderByDescending(x => x.Edad);
+
+foreach (Habitante h in listaEdad) { 
+    Console.WriteLine(h.datosHabitante());
+}
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+var ListaEdad2 = from h in listaHabitante orderby h.Edad descending select h;
+
+foreach (Habitante h in ListaEdad2)
+{
+    Console.WriteLine(h.datosHabitante());
+}
+
+#endregion
+
+#region ThenBy y ThenByDescending
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+var habitantes3 = listaHabitante.OrderBy(x => x.Edad).ThenBy(x => x.Nombre);
+
+foreach (var h in habitantes3)
+{
+    Console.WriteLine(h.datosHabitante());
+}
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+var lista4 = from h in listaHabitante orderby h.Edad, h.Nombre ascending select h;
+
+foreach (var h in lista4)
+{
+    Console.WriteLine(h.datosHabitante());
+}
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+var habitantes4 = listaHabitante.OrderBy(x => x.Edad).ThenByDescending(x => x.Nombre);
+
+foreach (var h in habitantes4)
+{
+    Console.WriteLine(h.datosHabitante());
+}
+
+Console.WriteLine("---------------------------------------------------------------------------------");
+
+var lista5 = from h in listaHabitante orderby h.Edad, h.Nombre descending select h;
+
+foreach (var h in lista4)
+{
+    Console.WriteLine(h.datosHabitante());
+}
 
 #endregion
